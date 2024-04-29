@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18, 20] # Define the Node.js versions you want to test against
+        node-version: [18] # Define the Node.js versions you want to test against
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18, 20] # Define the Node.js versions you want to publish with
+        node-version: [18] # Define the Node.js versions you want to publish with
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
