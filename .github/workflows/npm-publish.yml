@@ -4,9 +4,12 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    types: [closed]
 
 jobs:
   build:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -51,6 +54,8 @@ jobs:
 
       - name: Version packages
         run: npx lerna version minor --yes --conventional-commits --create-release github --no-private
+        env:
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Publish packages
         run: |

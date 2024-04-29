@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "build": "npx tsc --build tsconfig.build.json",
-    "test": "npx jest"
+    "test": "npx jest "
   },
   "author": "Nathan Marsh <nathan.do.while@gmail.com>",
   "license": "ISC",
