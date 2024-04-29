@@ -52,7 +52,8 @@ jobs:
         run: |
           # Example using Lerna
           # Replace with your actual publish command using Lerna or other tools
-          npx lerna publish from-package --yes --no-verify-access --no-private --dist-tag ${{ github.event.release.tag_name }}
+          npx lerna version ${{ github.event.release.tag_name }} --yes
+          npx lerna publish from-package --yes --no-private
           # Example using Yarn Workspaces
           # yarn publish --access public
 
