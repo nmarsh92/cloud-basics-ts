@@ -50,7 +50,7 @@ jobs:
         run: npm ci
 
       - name: Version packages
-        run: npx lerna version --yes
+        run: npx lerna version minor --yes --conventional-commits --create-release github --no-private
 
       - name: Publish packages
         run: |
@@ -58,3 +58,4 @@ jobs:
 
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
