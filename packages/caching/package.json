@@ -1,0 +1,29 @@
+{
+  "name": "@smart-arch/caching",
+  "version": "1.0.3",
+  "description": "Common interfaces and classes for caching in typescript projects.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "repository",
+    "caching",
+    "smart-arch",
+    "repository pattern"
+  ],
+  "author": "Nathan Marsh <nathan.do.while@gmail.com>",
+  "license": "ISC",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nmarsh92/smart-arch-ts"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "type": "module"
+}
