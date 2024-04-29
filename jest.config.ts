@@ -1,6 +1,7 @@
 import type { JestConfigWithTsJest } from 'ts-jest'
 
 const jestConfig: JestConfigWithTsJest = {
+  preset: 'ts-jest',
   extensionsToTreatAsEsm: ['.ts'],
   testEnvironment: 'node',
   moduleNameMapper: {
@@ -13,12 +14,7 @@ const jestConfig: JestConfigWithTsJest = {
         useESM: true,
       },
     ],
-  },
-  globals: {
-    'ts-jest': {
-      useESM: true,
-    },
-  },
+  }
 }
 
 export default jestConfig
