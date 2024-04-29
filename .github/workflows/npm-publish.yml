@@ -52,7 +52,7 @@ jobs:
         run: |
           # Example using Lerna
           # Replace with your actual publish command using Lerna or other tools
-          npx lerna publish from-package --yes --no-private --npm-tag ${{ steps.extract_version.outputs.VERSION }}
+          npx lerna publish from-package --yes --no-private --npm-tag ${{ github.event.release.tag_name }}
           # Example using Yarn Workspaces
           # yarn publish --access public
 
