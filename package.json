@@ -15,10 +15,12 @@
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.6",
     "@types/node": "^20.12.7",
+    "lerna": "^8.1.2",
     "typescript": "^5.4.5"
   },
   "engines": {
     "node": "18.x"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {}
 }

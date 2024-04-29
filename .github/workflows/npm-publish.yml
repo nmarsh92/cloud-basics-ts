@@ -25,9 +25,9 @@ jobs:
 
       - name: Build packages
         run: npm run build
-     #todo
-     # - name: Test
-     #   run: npm test
+      #todo
+      # - name: Test
+      #   run: npm test
 
   publish-npm:
     needs: build
@@ -52,7 +52,7 @@ jobs:
         run: |
           # Example using Lerna
           # Replace with your actual publish command using Lerna or other tools
-          npx lerna publish from-package --yes
+          npx lerna publish from-package --yes --no-private
           # Example using Yarn Workspaces
           # yarn publish --access public
 
