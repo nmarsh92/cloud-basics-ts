@@ -25,9 +25,9 @@ jobs:
 
       - name: Build packages
         run: npm run build
-      #todo
-      # - name: Test
-      #   run: npm test
+
+      - name: Test
+        run: npm test
 
   publish-npm:
     needs: build
