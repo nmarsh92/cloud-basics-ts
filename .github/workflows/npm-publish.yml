@@ -39,6 +39,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Checkout to a branch
+        run: git checkout main
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -50,12 +53,8 @@ jobs:
 
       - name: Publish packages
         run: |
-          # Example using Lerna
-          # Replace with your actual publish command using Lerna or other tools
-          npx lerna version ${{ github.event.release.tag_name }} --yes
+          npx lerna version ${{ github.event.release.tag_name }} --yes --no-private
           npx lerna publish from-package --yes --no-private
-          # Example using Yarn Workspaces
-          # yarn publish --access public
 
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
