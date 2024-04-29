@@ -14,7 +14,8 @@ const jestConfig: JestConfigWithTsJest = {
         useESM: true,
       },
     ],
-  }
+  },
+  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
 }
 
 export default jestConfig

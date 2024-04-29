@@ -3,6 +3,5 @@
   "references": [
     { "path": "./packages/caching" },
     { "path": "./packages/data-access" }
-  ],
-  "exclude": ["**/*.spec.ts"]
+  ]
 }
