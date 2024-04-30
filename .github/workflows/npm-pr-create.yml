@@ -2,7 +2,7 @@
 name: NPM PR Create
 on:
   pull_request:
-    types: [opened]
+    types: [opened, assigned, opened, synchronize, reopened]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -24,7 +24,7 @@ jobs:
       - name: Test
         run: npm test
   version:
-    #If PR is to main
+    needs: test
     if: github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
     steps:
@@ -46,16 +46,16 @@ jobs:
 
       - name: Checkout PR branch
         run: |
-          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr-${{ github.event.pull_request.number }}
-          git checkout pr-${{ github.event.pull_request.number }}
+          git fetch origin
+          git checkout ${{github.head_ref || github.ref_name}}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run lerna version
-        run: npx lerna version minor --yes
+        run: npx lerna version minor --yes --conventional-commits --no-private
 
       - name: Push version update
         run: |
-          git push origin pr-${{ github.event.pull_request.number }}
+          git push origin ${{github.head_ref || github.ref_name}}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
