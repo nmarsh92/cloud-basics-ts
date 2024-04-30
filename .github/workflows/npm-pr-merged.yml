@@ -47,13 +47,22 @@ jobs:
           gh pr create --title "Version Bump" --body "Version Bump" --base main --head version-bump
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Approve and merge PR
-        run: |
-          gh pr merge --admin --auto --squash --merge --delete-branch
+  merge:
+    needs: version
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto approve PR
+        uses: hmarr/auto-approve-action@v4
+        with:
+          review-message: "Auto approved automated PR"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: merge
+        run: gh pr merge --auto --squash --merge --delete-branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   publish:
-    needs: version
+    needs: merge
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
