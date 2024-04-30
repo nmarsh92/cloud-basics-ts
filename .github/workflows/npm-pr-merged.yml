@@ -10,6 +10,7 @@ on:
       - main
 jobs:
   release:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && github.actor != 'github-actions[bot]')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -29,21 +30,25 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@users.noreply.github.com"
 
-      - name: Run lerna version
-        id: lerna-version
-        run: |
-          echo "::set-output name=next-version::$(npx lerna version minor --yes --no-private --conventional-commits --create-release=github)"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Create release branch
         run: |
-          git checkout -b release-${{ steps.lerna-version.outputs.next-version }}
+          git checkout -b release
+
+      - name: Merge master into release
+        run: |
+          git merge origin/main
+
+      - name: Bump version
+        id: lerna-version
+        run: |
+          npx lerna version --conventional-commits --yes --no-private --no-changelog --create-release github
 
       - name: Push changes
         run: |
-          git push origin release-${{ steps.lerna-version.outputs.next-version }}
+          git push origin release
+
+      - name: Build
+        run: npm run build
 
       - name: Publish
         run: |
@@ -51,4 +56,4 @@ jobs:
 
       - name: Create Pull Request
         run: |
-          gh pr create --base main --head release-${{ steps.lerna-version.outputs.next-version }} --title "Release v${{ steps.lerna-version.outputs.next-version }}" --body "Release v${{ steps.lerna-version.outputs.next-version }}" --label release
+          gh pr create --base main --head release --title "Release version provisioned" --body "Release version provisioned" --web
