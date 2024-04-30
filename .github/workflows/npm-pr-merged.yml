@@ -41,7 +41,7 @@ jobs:
 
       - name: Push changes
         run: |
-          git push origin release --set-upstream origin release
+          git push -f --set-upstream origin release
 
       - name: Bump version
         id: lerna-version
