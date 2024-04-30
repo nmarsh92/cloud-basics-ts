@@ -24,10 +24,11 @@
     "url": "https://github.com/nmarsh92/smart-arch-ts"
   },
   "engines": {
-    "node": "18.x"
+    "node": ">=18"
   },
   "type": "module",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "private": false
 }
