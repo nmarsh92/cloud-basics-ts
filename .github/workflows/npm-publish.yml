@@ -74,7 +74,7 @@ jobs:
       #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish packages
-        run: npx lerna publish from-package minor --yes --conventional-commits  --no-private
+        run: npx lerna publish from-package --yes --conventional-commits  --no-private
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           LOG_LEVEL: silly
