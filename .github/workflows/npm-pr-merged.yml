@@ -1,3 +1,4 @@
+#Very open to suggestions to improve this workflow. I want to automate the release process, but having main protected complicates it severely.
 name: Release
 on:
   push:
@@ -42,6 +43,8 @@ jobs:
         id: lerna-version
         run: |
           npx lerna version --conventional-commits --yes --no-private --no-changelog --create-release github
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push changes
         run: |
@@ -53,7 +56,11 @@ jobs:
       - name: Publish
         run: |
           npx lerna publish from-git --yes --no-private
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create Pull Request
         run: |
           gh pr create --base main --head release --title "Release version provisioned" --body "Release version provisioned" --web
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
