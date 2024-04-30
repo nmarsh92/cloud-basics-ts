@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           # Add other setup options as needed
@@ -32,13 +32,10 @@ jobs:
 
       - name: Test
         run: npm test
-  version-and-publish:
-    needs: build
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+   version:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18] # Define the Node.js versions you want to publish with
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -46,7 +43,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18
 
       - name: Install dependencies
         run: npm ci
@@ -55,41 +52,79 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@users.noreply.github.com"
-      - name: Delete old version branch
-        run: |
-          git fetch origin
-          git branch -D version-update || true
-          git push origin --delete version-update || true
-      - name: Create new branch
-        run: |
-          git checkout -b version-update
 
-      # - name: Push changes
-      #   run: |
-      #     git push origin version-update
-
-      # - name: Version packages
-      #   run: npx lerna version minor --yes --conventional-commits  --no-private
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish packages
-        run: npx lerna publish from-git --yes --conventional-commits  --no-private
+      - name: Version packages
+        run: npx lerna version minor --yes --conventional-commits --no-private
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          LOG_LEVEL: silly
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push changes
-        run: |
-          git push origin version-update
+        run: git push origin HEAD:version-update
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: "Version update"
-          body: "This PR updates the version of the packages."
-          branch: "version-update"
-          base: "main"
-          delete-branch: true
-          draft: false
+          branch: version-update
+          title: 'Version update'
+          body: 'This PR updates the package versions.'
+          labels: versioning
+  publish:
+    needs: version
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'version-update'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish packages
+        run: npx lerna publish from-git --yes --no-private
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          LOG_LEVEL: silly
+  # version-and-publish:
+  #   needs: build
+  #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [18] # Define the Node.js versions you want to publish with
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
+
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+
+  #     - name: Install dependencies
+  #       run: npm ci
+
+  #     - name: Set Git user
+  #       run: |
+  #         git config user.name "GitHub Actions"
+  #         git config user.email "actions@users.noreply.github.com"
+
+  #     # - name: Push changes
+  #     #   run: |`
+  #     #     git push origin version-update
+
+  #     # - name: Version packages
+  #     #   run: npx lerna version minor --yes --conventional-commits  --no-private
+  #     #   env:
+  #     #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  #     - name: Publish packages
+  #       run: npx lerna publish from-git --yes --conventional-commits  --no-private
+  #       env:
+  #         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  #         LOG_LEVEL: silly
