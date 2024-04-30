@@ -50,10 +50,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push changes
-        run: |
-          git push --follow-tags
-
       - name: Build
         run: npm run build
 
@@ -64,13 +60,9 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: release"
-          title: "chore: release"
-          body: "Release version"
-          branch: release
-          base: main
+        run: |
+          git checkout -b release
+          git push -u origin release
+          gh pr create --title "Release" --body "Release" --base main --head release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
