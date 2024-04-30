@@ -27,6 +27,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Set Git user
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@users.noreply.github.com"
       - name: Run lerna version
         run: npx lerna version minor --yes --no-private --conventional-commits
         env:
