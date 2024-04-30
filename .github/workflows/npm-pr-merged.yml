@@ -63,6 +63,6 @@ jobs:
         run: |
           git checkout release
           git push -u origin release
-          gh pr create --title "Release" --body "Release" --base main --head release --delete-branch
+          gh pr create --title "Release" --body "Release" --base main --head release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
