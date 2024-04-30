@@ -53,6 +53,12 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@users.noreply.github.com"
 
+      - name: Create new version branch
+        run: |
+          git checkout -b version-update
+          git reset --hard origin/main
+          git push -f origin version-update
+
       - name: Version packages
         run: npx lerna version minor --yes --conventional-commits --no-private
         env:
