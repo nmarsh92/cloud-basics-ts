@@ -65,7 +65,7 @@ jobs:
           git checkout -b version-update
 
       - name: Version packages
-        run: npx lerna version minor --yes --no-push --conventional-commits  --no-private
+        run: npx lerna version minor --yes --conventional-commits  --no-private
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
