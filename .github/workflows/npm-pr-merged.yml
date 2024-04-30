@@ -35,9 +35,9 @@ jobs:
         run: |
           git checkout -b release
 
-      - name: Merge master into release
+      - name: Reset release on main
         run: |
-          git merge origin/main
+          git reset --hard origin/main
 
       - name: Bump version
         id: lerna-version
@@ -48,7 +48,7 @@ jobs:
 
       - name: Push changes
         run: |
-          git push origin release
+          git push origin release --set-upstream origin release
 
       - name: Build
         run: npm run build
