@@ -1,0 +1,68 @@
+#Very open to suggestions to improve this workflow. I want to automate the release process, but having main protected complicates it severely.
+name: Release
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+jobs:
+  release:
+    if: github.event_name == 'push' || (github.event.pull_request.merged == true && github.head_ref != 'release')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set Git user
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@users.noreply.github.com"
+
+      - name: Create release branch
+        run: |
+          git checkout -b release
+
+      - name: Reset release on main
+        run: |
+          git reset --hard origin/main
+
+      - name: Push changes
+        run: |
+          git push -f --set-upstream origin release
+
+      - name: Bump version
+        id: lerna-version
+        run: |
+          npx lerna version minor --conventional-commits --yes --no-private --create-release github
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish
+        run: |
+          npx lerna publish from-git --yes --no-private
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create Pull Request
+        run: |
+          git checkout release
+          git push -u origin release
+          gh pr create --title "Release" --body "Release" --base main --head release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

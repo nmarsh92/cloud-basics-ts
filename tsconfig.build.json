@@ -1,0 +1,7 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/caching" },
+    { "path": "./packages/data-access" }
+  ]
+}

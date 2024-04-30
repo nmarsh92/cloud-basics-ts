@@ -1,0 +1,29 @@
+{
+  "name": "smart-arch",
+  "version": "1.0.0",
+  "description": "A package for basic interfaces and base classes commonly needed in an server-side project.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "build": "npx tsc --build tsconfig.build.json",
+    "test": "npx jest "
+  },
+  "author": "Nathan Marsh <nathan.do.while@gmail.com>",
+  "license": "ISC",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.6",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.12.7",
+    "lerna": "^8.1.2",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "type": "module"
+}
