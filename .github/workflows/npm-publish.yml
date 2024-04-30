@@ -76,7 +76,7 @@ jobs:
       - name: Publish packages
         run: npx lerna publish from-git --yes
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
