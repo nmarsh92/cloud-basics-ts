@@ -50,6 +50,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Push changes
+        run: |
+          git push --follow-tags
+
       - name: Build
         run: npm run build
 
