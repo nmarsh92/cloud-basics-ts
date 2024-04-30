@@ -42,7 +42,7 @@ jobs:
       - name: Bump version
         id: lerna-version
         run: |
-          npx lerna version --conventional-commits --yes --no-private --no-changelog --create-release github
+          npx lerna version --conventional-commits --yes --no-private --create-release github
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
