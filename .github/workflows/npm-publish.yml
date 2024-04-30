@@ -67,16 +67,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push changes
-        run: git push origin HEAD:version-update
+        run: git push origin version-update
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: version-update
-          title: "Version update"
-          body: "This PR updates the package versions."
-          labels: versioning
+        run: gh pr create --title "Version Update" --body "Version Update" --base main --head version-update
+
   publish:
     needs: version
     runs-on: ubuntu-latest
