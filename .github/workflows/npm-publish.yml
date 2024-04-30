@@ -64,24 +64,24 @@ jobs:
         run: |
           git checkout -b version-update
 
-      - name: Push changes
-        run: |
-          git push origin version-update
+      # - name: Push changes
+      #   run: |
+      #     git push origin version-update
 
-      - name: Version packages
-        run: npx lerna version minor --yes --conventional-commits  --no-private
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Push changes
-        run: |
-          git push origin version-update
+      # - name: Version packages
+      #   run: npx lerna version minor --yes --conventional-commits  --no-private
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish packages
-        run: npx lerna publish from-package --yes --no-private
+        run: npx lerna publish from-package minor --yes --conventional-commits  --no-private
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           LOG_LEVEL: silly
+
+      - name: Push changes
+        run: |
+          git push origin version-update
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
