@@ -30,5 +30,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "private": false
+  "private": false,
+  "dependencies": {
+    "mongoose": "^8.3.3"
+  }
 }
