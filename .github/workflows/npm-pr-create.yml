@@ -52,10 +52,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run lerna version
-        run: npx lerna version minor --yes --conventional-commits --no-private
-
-      - name: Push version update
-        run: |
-          git push origin ${{github.head_ref || github.ref_name}}
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx lerna version minor --yes --no-private --amend
