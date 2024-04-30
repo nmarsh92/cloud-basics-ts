@@ -39,11 +39,11 @@ jobs:
 
       - name: Create release branch
         run: |
-          git checkout -b release/${{ steps.lerna-version.outputs.next-version }}
+          git checkout -b release-${{ steps.lerna-version.outputs.next-version }}
 
       - name: Push changes
         run: |
-          git push origin release/${{ steps.lerna-version.outputs.next-version }}
+          git push origin release-${{ steps.lerna-version.outputs.next-version }}
 
       - name: Publish
         run: |
@@ -51,4 +51,4 @@ jobs:
 
       - name: Create Pull Request
         run: |
-          gh pr create --base main --head release/${{ steps.lerna-version.outputs.next-version }} --title "Release v${{ steps.lerna-version.outputs.next-version }}" --body "Release v${{ steps.lerna-version.outputs.next-version }}" --label release
+          gh pr create --base main --head release-${{ steps.lerna-version.outputs.next-version }} --title "Release v${{ steps.lerna-version.outputs.next-version }}" --body "Release v${{ steps.lerna-version.outputs.next-version }}" --label release
