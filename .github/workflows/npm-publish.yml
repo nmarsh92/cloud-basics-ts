@@ -36,6 +36,7 @@ jobs:
         run: npm test
 
   version:
+    needs: build
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
@@ -71,6 +72,8 @@ jobs:
 
       - name: Create Pull Request
         run: gh pr create --title "Version Update" --body "Version Update" --base main --head version-update
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
     needs: version
