@@ -33,7 +33,7 @@ jobs:
       - name: Test
         run: npm test
 
-   version:
+  version:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
@@ -66,8 +66,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: version-update
-          title: 'Version update'
-          body: 'This PR updates the package versions.'
+          title: "Version update"
+          body: "This PR updates the package versions."
           labels: versioning
   publish:
     needs: version
