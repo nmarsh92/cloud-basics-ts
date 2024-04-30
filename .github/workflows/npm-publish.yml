@@ -78,7 +78,7 @@ jobs:
           git push origin version-update
 
       - name: Publish packages
-        run: npx lerna publish from-git --yes
+        run: npx lerna publish from-package --yes --no-private
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           LOG_LEVEL: silly
