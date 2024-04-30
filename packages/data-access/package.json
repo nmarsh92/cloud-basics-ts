@@ -1,6 +1,6 @@
 {
   "name": "@smart-arch/data-access",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "Common interfaces and classes for data access in the Smart Arch project.",
   "main": "index.js",
   "types": "dist/index.d.ts",
