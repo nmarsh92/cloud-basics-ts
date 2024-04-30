@@ -1,5 +1,5 @@
-import { MultiTenant } from "../domain/multiTenant.js";
-import { MultiTenantEntity } from "../domain/multiTenantEntity.js";
+import { MultiTenant } from "../../../domain/src/multiTenant.js";
+import { MultiTenantEntity } from "../../../domain/src/multiTenantEntity.js";
 import { IRepository } from "./IRepository.js";
 
 export interface IMultiTenantRepository<TId, TUserId, TTenantId, TEntity extends MultiTenantEntity<TId, TTenantId, TUserId>> extends IRepository<TId, TEntity> {

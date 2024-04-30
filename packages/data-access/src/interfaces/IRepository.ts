@@ -1,6 +1,6 @@
-import { Entity } from "../domain/entity.js";
-import { Page } from "../domain/page.js";
-import { PagedQuery } from "../domain/pagedQuery.js";
+import { Entity } from "../../../domain/src/entity.js";
+import { Page } from "../../../domain/src/page.js";
+import { PagedQuery } from "../../../domain/src/pagedQuery.js";
 
 /**
  * Repository interface.

@@ -1,5 +1,5 @@
 {
-  "name": "@smart-arch/data-access",
+  "name": "@smart-arch/domain",
   "version": "1.29.0",
   "description": "Common interfaces and classes for data access in the Smart Arch project.",
   "main": "index.js",
@@ -10,7 +10,7 @@
   },
   "keywords": [
     "repository",
-    "data-access",
+    "domain",
     "smart-arch",
     "repository pattern"
   ],
@@ -32,7 +32,6 @@
   },
   "private": false,
   "dependencies": {
-    "mongoose": "^8.3.3",
-    "@smart-arch/domain": "^1.29.0"
+    "mongoose": "^8.3.3"
   }
 }

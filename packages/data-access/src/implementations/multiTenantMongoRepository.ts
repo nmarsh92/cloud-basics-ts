@@ -1,8 +1,8 @@
 import { FilterQuery, Model, ObjectId } from "mongoose";
-import { Page } from "../domain/page.js";
-import { PagedQuery } from "../domain/pagedQuery.js";
+import { Page } from "../../../domain/src/page.js";
+import { PagedQuery } from "../../../domain/src/pagedQuery.js";
 import { IRepository } from "../interfaces/IRepository.js";
-import { MultiTenantEntity } from "../domain/multiTenantEntity.js";
+import { MultiTenantEntity } from "../../../domain/src/multiTenantEntity.js";
 
 /** @inheritdoc */
 export abstract class MultiTenantMongoBaseRepository<TEntity extends MultiTenantEntity<ObjectId, string, string>> implements IRepository<ObjectId, TEntity> {
