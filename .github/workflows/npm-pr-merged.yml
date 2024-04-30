@@ -61,7 +61,7 @@ jobs:
 
       - name: Create Pull Request
         run: |
-          git checkout -b release
+          git checkout release
           git push -u origin release
           gh pr create --title "Release" --body "Release" --base main --head release
         env:
