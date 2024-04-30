@@ -2,7 +2,7 @@
 name: NPM PR Create
 on:
   pull_request:
-    types: [opened]
+    types: [opened, assigned, opened, synchronize, reopened]
 jobs:
   test:
     runs-on: ubuntu-latest
