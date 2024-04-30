@@ -1,6 +1,6 @@
 {
   "name": "@smart-arch/caching",
-  "version": "1.26.0",
+  "version": "1.27.0",
   "description": "Common interfaces and classes for caching in typescript projects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
