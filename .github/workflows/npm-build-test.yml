@@ -29,6 +29,9 @@ jobs:
     steps:
       - name: Run lerna version
         run: npx lerna version minor --yes --no-private --conventional-commits
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   publish:
     needs: version
